@@ -15,25 +15,25 @@ import java.util.stream.Collectors;
 
 public class CamelTransportServiceImpl implements CamelTransportService
 {
-    private static String CAMEL_REQUEST_QUERY = "http://localhost:8090/camel/";
-    private static String CITY_REQUEST = "http://localhost:8090/city/";
-    private static String CAMELRIDE_REQUEST_QUERY = "http://localhost:8090/camelRide/";
     private HttpConnectFactory connectFactory;
+    private QueryFactory queryFactory;
 
-    private CamelTransportServiceImpl(HttpConnectFactory connectFactory)
+    private CamelTransportServiceImpl(HttpConnectFactory connectFactory, QueryFactory queryFactory)
     {
         this.connectFactory = connectFactory;
+        this.queryFactory = queryFactory;
     }
 
     public CamelTransportServiceImpl()
     {
-        this(new HttpConnectFactory());
+        this(new HttpConnectFactory(), new QueryFactory());
     }
 
     @Override
     public List<CamelRide> getAllCamelRides()
     {
-        return new JsonData<CamelRide>().parseJsonToList(connectFactory, CAMELRIDE_REQUEST_QUERY, CamelRide.class);
+        String request = queryFactory.getQuery(RestQuery.CAMELRIDES);
+        return new JsonData<CamelRide>().parseJsonToList(connectFactory, request, CamelRide.class);
     }
 
     @Override
@@ -91,20 +91,21 @@ public class CamelTransportServiceImpl implements CamelTransportService
     {
         return getAllCamelRides().stream()
                                  .filter(camelRide -> camelRide.getCamel().getId().equals(camelId))
-                                .map(CamelRide::getDestination)
-                                .collect(Collectors.toList());
+                                 .map(CamelRide::getDestination)
+                                 .collect(Collectors.toList());
     }
 
     @Override
     public List<City> getCitiesByCountryName(String countryName)
     {
-        String request = String.format(CITY_REQUEST + "by?country=%s", countryName);
+        String request = queryFactory.getQuery(RestQuery.CITIES_BY_COUNTRY, countryName);
         return new JsonData<City>().parseJsonToList(connectFactory, request, City.class);
     }
 
     private List<Camel> getAllCamels()
     {
-        return new JsonData<Camel>().parseJsonToList(connectFactory, CAMEL_REQUEST_QUERY, Camel.class);
+        String request = queryFactory.getQuery(RestQuery.CAMELS);
+        return new JsonData<Camel>().parseJsonToList(connectFactory, request, Camel.class);
     }
 
     @Override
@@ -126,7 +127,7 @@ public class CamelTransportServiceImpl implements CamelTransportService
     @Override
     public List<Camel> getCamelsByGender(String gender)
     {
-        String request = String.format(CAMEL_REQUEST_QUERY + "by?gender=%s", gender.toLowerCase());
+        String request = queryFactory.getQuery(RestQuery.CAMELS_BY_GENDER, gender);
         return new JsonData<Camel>().parseJsonToList(connectFactory, request, Camel.class);
     }
 

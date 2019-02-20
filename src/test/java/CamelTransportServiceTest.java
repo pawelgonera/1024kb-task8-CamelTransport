@@ -85,7 +85,7 @@ public class CamelTransportServiceTest
         Timestamp end = Timestamp.valueOf("2019-02-03 18:47:52.06");
 
         List<CamelRide> camelRideList = service.getCamelRidesByDepartureDateRange(start, end);
-        Assert.assertEquals(camelRideList.size(), 6);
+        Assert.assertEquals(camelRideList.size(), 7);
     }
 
     @Test
@@ -151,7 +151,7 @@ public class CamelTransportServiceTest
     public void testGetCamelWorkingDuration()
     {
         Duration duration = service.getCamelWorkingDuration(1L);
-        System.out.println(duration.toDays());
+        Assert.assertEquals(duration.getSeconds(), 3101403);
     }
 
 }
