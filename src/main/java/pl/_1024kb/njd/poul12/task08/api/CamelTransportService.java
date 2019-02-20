@@ -1,9 +1,16 @@
+package pl._1024kb.njd.poul12.task08.api;
+
+import pl._1024kb.njd.poul12.task08.entity.CamelRide;
+import pl._1024kb.njd.poul12.task08.entity.Camel;
+import pl._1024kb.njd.poul12.task08.entity.City;
+
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
-public interface CamelTransportService {
-    List<CamelRide> getAllCamelRides();
+public interface CamelTransportService
+{
+    List getAllCamelRides();
     List<CamelRide> getCamelRidesByFromCity(String fromCityName);
     List<CamelRide> getCamelRidesByCityDestionation(String destinationCityName);
     List<CamelRide> getCamelRidesByCamel(Long camelId);
