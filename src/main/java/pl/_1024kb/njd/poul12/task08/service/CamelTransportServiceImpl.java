@@ -8,8 +8,6 @@ import pl._1024kb.njd.poul12.task08.entity.City;
 import pl._1024kb.njd.poul12.task08.exception.NotFoundDesiredJsonDataException;
 import pl._1024kb.njd.poul12.task08.util.JsonData;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
@@ -21,27 +19,21 @@ public class CamelTransportServiceImpl implements CamelTransportService
     private static String CITY_REQUEST = "http://localhost:8090/city/";
     private static String CAMELRIDE_REQUEST_QUERY = "http://localhost:8090/camelRide/";
     private HttpConnectFactory connectFactory;
-    private Jsonb jsonb;
-    private JsonData jsonData;
 
-    private CamelTransportServiceImpl(HttpConnectFactory connectFactory, Jsonb jsonb, JsonData jsonData)
+    private CamelTransportServiceImpl(HttpConnectFactory connectFactory)
     {
         this.connectFactory = connectFactory;
-        this.jsonb = jsonb;
-        this.jsonData = jsonData;
     }
 
     public CamelTransportServiceImpl()
     {
-        this(new HttpConnectFactory(), JsonbBuilder.create(), new JsonData());
-
+        this(new HttpConnectFactory());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<CamelRide> getAllCamelRides()
     {
-        return (List<CamelRide>) jsonData.parseJsonToList(connectFactory, CAMELRIDE_REQUEST_QUERY, CamelRide.class);
+        return new JsonData<CamelRide>().parseJsonToList(connectFactory, CAMELRIDE_REQUEST_QUERY, CamelRide.class);
     }
 
     @Override
@@ -103,17 +95,16 @@ public class CamelTransportServiceImpl implements CamelTransportService
                                 .collect(Collectors.toList());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<City> getCitiesByCountryName(String countryName)
     {
-        return (List<City>) jsonData.parseJsonToList(connectFactory, String.format(CITY_REQUEST + "by?country=%s", countryName), City.class);
+        String request = String.format(CITY_REQUEST + "by?country=%s", countryName);
+        return new JsonData<City>().parseJsonToList(connectFactory, request, City.class);
     }
 
-    @SuppressWarnings("unchecked")
     private List<Camel> getAllCamels()
     {
-        return (List<Camel>) jsonData.parseJsonToList(connectFactory, CAMEL_REQUEST_QUERY, Camel.class);
+        return new JsonData<Camel>().parseJsonToList(connectFactory, CAMEL_REQUEST_QUERY, Camel.class);
     }
 
     @Override
@@ -132,11 +123,11 @@ public class CamelTransportServiceImpl implements CamelTransportService
                              .collect(Collectors.toList());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<Camel> getCamelsByGender(String gender)
     {
-        return (List<Camel>) jsonData.parseJsonToList(connectFactory, CAMEL_REQUEST_QUERY + String.format("by?gender=%s", gender.toLowerCase()), Camel.class);
+        String request = String.format(CAMEL_REQUEST_QUERY + "by?gender=%s", gender.toLowerCase());
+        return new JsonData<Camel>().parseJsonToList(connectFactory, request, Camel.class);
     }
 
     @Override

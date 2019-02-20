@@ -9,11 +9,11 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class JsonData
+public class JsonData<T>
 {
-    public List<?> parseJsonToList(HttpConnectFactory factory, String request, Class<?> entity)
+    public List<T> parseJsonToList(HttpConnectFactory factory, String request, Class<? extends T> entity)
     {
-        List<?> entityList = new LinkedList<>();
+        List<T> entityList = new LinkedList<>();
         ObjectMapper mapper = new ObjectMapper();
         try(HttpConnection connection = factory.getConnection(request))
         {
