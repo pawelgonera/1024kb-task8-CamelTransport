@@ -4,21 +4,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pl._1024kb.njd.poul12.task08.api.HttpConnectFactory;
 import pl._1024kb.njd.poul12.task08.api.HttpConnection;
+import pl._1024kb.njd.poul12.task08.exception.NotFoundDesiredJsonDataException;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class JsonData<T>
+public class JsonParser<T>
 {
-    public List<T> parseJsonToList(HttpConnectFactory factory, String request, Class<? extends T> entity)
+    public List<T> parseJsonToList(HttpConnectFactory factory, String request, Class<? extends T> model)
     {
         List<T> entityList = new LinkedList<>();
         ObjectMapper mapper = new ObjectMapper();
         try(HttpConnection connection = factory.getConnection(request))
         {
             String response = connection.connect();
-            entityList = mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, entity));
+            entityList = mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, model));
+            if(entityList.isEmpty())
+                throw new NotFoundDesiredJsonDataException("Not found any desired value");
 
         } catch (IOException e)
         {

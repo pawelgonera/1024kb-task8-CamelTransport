@@ -17,7 +17,7 @@ public class HttpConnection implements AutoCloseable
         try
         {
             connection = (HttpURLConnection) new URL(url).openConnection();
-            //connection.setRequestMethod("POST");
+
         }catch (IOException e)
         {
             throw new WrongServerStatusException(e);

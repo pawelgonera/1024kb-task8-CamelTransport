@@ -1,48 +1,22 @@
+package service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 
 import pl._1024kb.njd.poul12.task08.api.CamelTransportService;
-import pl._1024kb.njd.poul12.task08.api.HttpConnectFactory;
-import pl._1024kb.njd.poul12.task08.api.HttpConnection;
 import pl._1024kb.njd.poul12.task08.entity.Camel;
 import pl._1024kb.njd.poul12.task08.entity.CamelRide;
 import pl._1024kb.njd.poul12.task08.entity.City;
 import pl._1024kb.njd.poul12.task08.service.CamelTransportServiceImpl;
-import pl._1024kb.njd.poul12.task08.util.JsonData;
 
-import javax.json.bind.Jsonb;
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
-
-public class CamelTransportServiceTest
+public class CamelTransportServiceIntegrationTest
 {
-    private static final int CAMELRIDES_QUANTITY = 58;
-
-
-    @Mock
     private CamelTransportService service;
-
-    @Mock
-    private HttpConnection connection;
-
-    @Mock
-    private HttpConnectFactory connectFactory;
-
-    @Mock
-    private Jsonb jsonb;
-
-    @Mock
-    private JsonData jsonData;
-
-    @Mock
-    private ObjectMapper mapper;
 
     @Before
     public void setUp()
@@ -54,7 +28,7 @@ public class CamelTransportServiceTest
     public void testGetAllCamelRides()
     {
         List camelRideList = service.getAllCamelRides();
-        Assert.assertEquals(camelRideList.size(), CAMELRIDES_QUANTITY);
+        Assert.assertEquals(camelRideList.size(), 58);
     }
 
     @Test

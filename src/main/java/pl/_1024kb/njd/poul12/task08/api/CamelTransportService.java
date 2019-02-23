@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CamelTransportService
 {
-    List getAllCamelRides();
+    List<CamelRide> getAllCamelRides();
     List<CamelRide> getCamelRidesByFromCity(String fromCityName);
     List<CamelRide> getCamelRidesByCityDestionation(String destinationCityName);
     List<CamelRide> getCamelRidesByCamel(Long camelId);
