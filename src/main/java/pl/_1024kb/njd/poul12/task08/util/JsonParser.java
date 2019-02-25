@@ -19,9 +19,10 @@ public class JsonParser<T>
         try(HttpConnection connection = factory.getConnection(request))
         {
             String response = connection.connect();
-            entityList = mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, model));
-            if(entityList.isEmpty())
+            if(response == null || response.isEmpty())
                 throw new NotFoundDesiredJsonDataException("Not found any desired value");
+
+            entityList = mapper.readValue(response, mapper.getTypeFactory().constructCollectionType(List.class, model));
 
         } catch (IOException e)
         {
