@@ -12,7 +12,7 @@ public interface CamelTransportService
 {
     List<CamelRide> getAllCamelRides();
     List<CamelRide> getCamelRidesByFromCity(String fromCityName);
-    List<CamelRide> getCamelRidesByCityDestionation(String destinationCityName);
+    List<CamelRide> getCamelRidesByCityDestination(String destinationCityName);
     List<CamelRide> getCamelRidesByCamel(Long camelId);
     List<CamelRide> getCamelRidesByDepartureDateRange(Date startDepartureDate, Date endDepartureDate);
     List<CamelRide> getCamelRidesByDepartureDate(Date departureDate);

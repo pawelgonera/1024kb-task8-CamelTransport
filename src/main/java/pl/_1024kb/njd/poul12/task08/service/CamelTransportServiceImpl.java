@@ -45,7 +45,7 @@ public class CamelTransportServiceImpl implements CamelTransportService
     }
 
     @Override
-    public List<CamelRide> getCamelRidesByCityDestionation(String destinationCityName)
+    public List<CamelRide> getCamelRidesByCityDestination(String destinationCityName)
     {
         return getAllCamelRides().stream()
                             .filter(camelRide -> camelRide.getDestination().getName().equals(destinationCityName))
@@ -138,7 +138,6 @@ public class CamelTransportServiceImpl implements CamelTransportService
                              .filter(camel -> camel.getName().equals(name))
                              .findFirst()
                              .orElseThrow(this::newRunTimeException);
-
     }
 
     @Override

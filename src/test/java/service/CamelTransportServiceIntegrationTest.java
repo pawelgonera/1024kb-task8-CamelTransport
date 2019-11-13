@@ -41,7 +41,7 @@ public class CamelTransportServiceIntegrationTest
     @Test
     public void testGetCamelRidesByCityDestionation()
     {
-        List<CamelRide> camelRideList = service.getCamelRidesByCityDestionation("Warszawa");
+        List<CamelRide> camelRideList = service.getCamelRidesByCityDestination("Warszawa");
         Assert.assertEquals(camelRideList.size(), 2);
     }
 
